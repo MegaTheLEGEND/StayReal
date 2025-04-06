@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@stayreal/notification-sender':
+        specifier: 'file:'
+        version: file:(encoding@0.1.13)
       apns2:
         specifier: ^12.1.0
         version: 12.1.0
@@ -148,6 +151,9 @@ packages:
 
   '@protobufjs/utf8@1.1.0':
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
+
+  '@stayreal/notification-sender@file:':
+    resolution: {directory: '', type: directory}
 
   '@tootallnate/once@1.1.2':
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
@@ -1226,6 +1232,18 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0':
     optional: true
+
+  '@stayreal/notification-sender@file:(encoding@0.1.13)':
+    dependencies:
+      apns2: 12.1.0
+      firebase-admin: 13.1.0(encoding@0.1.13)
+      sqlite: 5.1.1
+      sqlite3: 5.1.7
+      uWebSockets.js: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/6609a88ffa9a16ac5158046761356ce03250a0df
+    transitivePeerDependencies:
+      - bluebird
+      - encoding
+      - supports-color
 
   '@tootallnate/once@1.1.2':
     optional: true

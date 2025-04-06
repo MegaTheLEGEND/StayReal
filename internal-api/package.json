@@ -19,6 +19,7 @@
     "build": "rollup -c"
   },
   "dependencies": {
+    "@stayreal/api": "file:",
     "@tauri-apps/api": "^2.3.0"
   },
   "devDependencies": {
