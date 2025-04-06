@@ -3,7 +3,6 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@stayreal/notification-sender": "file:",
     "apns2": "^12.1.0",
     "firebase-admin": "^13.1.0",
     "sqlite": "^5.1.1",
@@ -17,7 +16,6 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.9",
-    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   }
 }
