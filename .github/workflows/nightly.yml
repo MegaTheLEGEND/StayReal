@@ -116,9 +116,9 @@ jobs:
 
       - name: install frontend dependencies
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
           cd internal-api
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm build
 
       - uses: dtolnay/rust-toolchain@stable
@@ -255,9 +255,9 @@ jobs:
 
       - name: install frontend dependencies
         run: |
-          pnpm install
+          pnpm install --no-frozen-lockfile
           cd internal-api
-          pnpm install
+          pnpm install --no-frozen-lockfile
           pnpm build
 
       - name: (Android) install Java
@@ -278,7 +278,7 @@ jobs:
           echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/25.2.9519653" >> $GITHUB_ENV
 
       - name: (Android) setup signing
-        if: matrix.os == 'android'
+        if: matrix.os == 'android' && secrets.ANDROID_KEY_ALIAS && secrets.ANDROID_KEY_PASSWORD && secrets.ANDROID_KEY_BASE64
         run: |
           cd src-tauri/gen/android
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" > keystore.properties
@@ -287,7 +287,7 @@ jobs:
           echo "storeFile=$RUNNER_TEMP/keystore.jks" >> keystore.properties
 
       - name: (iOS) setup signing
-        if: matrix.os == 'ios'
+        if: matrix.os == 'ios' && secrets.APPLE_API_KEY_BASE64
         run: |
           base64 -d <<< "${{ secrets.APPLE_API_KEY_BASE64 }}" > $RUNNER_TEMP/apple-api-key.p8
 
