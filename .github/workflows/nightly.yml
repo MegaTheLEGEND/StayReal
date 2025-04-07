@@ -278,18 +278,26 @@ jobs:
           echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/25.2.9519653" >> $GITHUB_ENV
 
       - name: (Android) setup signing
-        if: matrix.os == 'android' && secrets.ANDROID_KEY_ALIAS && secrets.ANDROID_KEY_PASSWORD && secrets.ANDROID_KEY_BASE64
+        if: matrix.os == 'android'
         run: |
-          cd src-tauri/gen/android
-          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" > keystore.properties
-          echo "password=${{ secrets.ANDROID_KEY_PASSWORD }}" >> keystore.properties
-          base64 -d <<< "${{ secrets.ANDROID_KEY_BASE64 }}" > $RUNNER_TEMP/keystore.jks
-          echo "storeFile=$RUNNER_TEMP/keystore.jks" >> keystore.properties
+          if [ -n "${{ secrets.ANDROID_KEY_ALIAS }}" ] && [ -n "${{ secrets.ANDROID_KEY_PASSWORD }}" ] && [ -n "${{ secrets.ANDROID_KEY_BASE64 }}" ]; then
+            cd src-tauri/gen/android
+            echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" > keystore.properties
+            echo "password=${{ secrets.ANDROID_KEY_PASSWORD }}" >> keystore.properties
+            base64 -d <<< "${{ secrets.ANDROID_KEY_BASE64 }}" > $RUNNER_TEMP/keystore.jks
+            echo "storeFile=$RUNNER_TEMP/keystore.jks" >> keystore.properties
+          else
+            echo "Android signing keys are not available."
+          fi
 
       - name: (iOS) setup signing
-        if: matrix.os == 'ios' && secrets.APPLE_API_KEY_BASE64
+        if: matrix.os == 'ios'
         run: |
-          base64 -d <<< "${{ secrets.APPLE_API_KEY_BASE64 }}" > $RUNNER_TEMP/apple-api-key.p8
+          if [ -n "${{ secrets.APPLE_API_KEY_BASE64 }}" ]; then
+            base64 -d <<< "${{ secrets.APPLE_API_KEY_BASE64 }}" > $RUNNER_TEMP/apple-api-key.p8
+          else
+            echo "Apple API key is not available."
+          fi
 
       - name: setup Rust toolchain
         uses: dtolnay/rust-toolchain@stable
